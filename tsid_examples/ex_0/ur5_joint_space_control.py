@@ -23,9 +23,11 @@ PLOT_JOINT_ACC = 1
 PLOT_TORQUES = 0
 USE_VIEWER = 1
 
+# defining the robot model using tsif robotwrapper
 robot = tsid.RobotWrapper(conf.urdf, [conf.path], False)
 model = robot.model()
 
+# 
 formulation = tsid.InverseDynamicsFormulationAccForce("tsid", robot, False)
 q0 = conf.q0
 v0 = np.zeros(robot.nv)
