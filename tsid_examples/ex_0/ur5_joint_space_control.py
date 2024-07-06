@@ -43,9 +43,9 @@ postureTask.setReference(trajPosture.computeNext())
 
 v_max = conf.v_max_scaling * model.velocityLimit
 v_min = -v_max
-# jointBoundsTask = tsid.TaskJointBounds("task-joint-bounds", robot, conf.dt)
-# jointBoundsTask.setVelocityBounds(v_min, v_max)
-# formulation.addMotionTask(jointBoundsTask, conf.w_joint_bounds, 0, 0.0)
+jointBoundsTask = tsid.TaskJointBounds("task-joint-bounds", robot, conf.dt)
+jointBoundsTask.setVelocityBounds(v_min, v_max)
+formulation.addMotionTask(jointBoundsTask, conf.w_joint_bounds, 0, 0.0)
 
 solver = tsid.SolverHQuadProgFast("qp solver")
 solver.resize(formulation.nVar, formulation.nEq, formulation.nIn)
@@ -96,9 +96,9 @@ for i in range(0, N):
     q_ref[:, i] = q0 + amp * np.sin(two_pi_f * t + phi)
     v_ref[:, i] = two_pi_f_amp * np.cos(two_pi_f * t + phi)
     dv_ref[:, i] = -two_pi_f_squared_amp * np.sin(two_pi_f * t + phi)
-    samplePosture.pos(q_ref[:, i])
-    samplePosture.vel(v_ref[:, i])
-    samplePosture.acc(dv_ref[:, i])
+    samplePosture.value(q_ref[:, i])
+    samplePosture.derivative(v_ref[:, i])
+    samplePosture.second_derivative(dv_ref[:, i])
     postureTask.setReference(samplePosture)
 
     HQPData = formulation.computeProblemData(t, q[:, i], v[:, i])
