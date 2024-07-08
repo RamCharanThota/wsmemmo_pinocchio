@@ -28,18 +28,17 @@ def loadTalos(modelPath='/opt/openrobots/share'):
     SRDF_FILENAME = "talos.srdf"
     SRDF_SUBPATH = "/talos_data/srdf/" + SRDF_FILENAME
     URDF_SUBPATH = "/talos_data/urdf/" + URDF_FILENAME
-    robot = RobotWrapper()
-    robot.BuildFromURDF(modelPath+URDF_SUBPATH, [modelPath],
+    robot = RobotWrapper.BuildFromURDF(modelPath+URDF_SUBPATH, [modelPath],
                                        pinocchio.JointModelFreeFlyer())
     # Load SRDF file
     rmodel = robot.model
-   # pinocchio.getNeutralConfiguration(rmodel, modelPath+SRDF_SUBPATH, False)
+    pinocchio.getNeutralConfiguration(rmodel, modelPath+SRDF_SUBPATH, False)
     pinocchio.loadRotorParameters(rmodel, modelPath+SRDF_SUBPATH, False)
     rmodel.armature = \
               np.multiply(rmodel.rotorInertia.flat, np.square(rmodel.rotorGearRatio.flat))
     assert((rmodel.armature[:6]==0.).all())
 
-    robot.q0.flat[:] = rmodel.neutralConfiguration()
+    robot.q0.flat[:] = rmodel.neutralConfiguration
     
     """
     robot.q0.flat[:] =  [0,0,1.0192720229567027,0,0,0,1,0.0,0.0,-0.411354,0.859395,-0.448041,-0.001708,0.0,0.0,-0.411354,0.859395,-0.448041,-0.001708,0,0.006761,0.25847,0.173046,-0.0002,-0.525366,0,0,0.1,0.5,-0.25847,-0.173046,0.0002,-0.525366,0,0,0.1,0.5,0,0]
