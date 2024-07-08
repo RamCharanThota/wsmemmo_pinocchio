@@ -1,14 +1,14 @@
-#    LMPC_walking is a python software implementation of some of the linear MPC
+#    lmpc_walking is a python software implementation of some of the linear MPC
 #    algorithms based presented in:
 #    https://groups.csail.mit.edu/robotics-center/public_papers/Wieber15.pdf
 #    Copyright (C) 2019 @ahmad gazar
 
-#    LMPC_walking is free software: you can redistribute it and/or modify
+#    lmpc_walking is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    LMPC_walking is distributed in the hope that it will be useful,
+#    lmpc_walking is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
@@ -21,15 +21,22 @@
 import numpy as np
 from quadprog import solve_qp
 
+import sys
+import os
+
+# Get the directory of the current script
+# current_script_directory = os.path.dirname(os.path.abspath(__file__))
+
+# sys.path.append(current_script_directory)
 try:
-    import LMPC_walking.second_order.constraints as constraints
-    import LMPC_walking.second_order.cost_function as cost_function
-    import LMPC_walking.second_order.motion_model as motion_model
-    import LMPC_walking.second_order.plot_utils as plot_utils
-    import LMPC_walking.second_order.reference_trajectories as reference_trajectories
+    import lmpc_walking.second_order.constraints as constraints
+    import lmpc_walking.second_order.cost_function as cost_function
+    import lmpc_walking.second_order.motion_model as motion_model
+    import lmpc_walking.second_order.plot_utils as plot_utils
+    import lmpc_walking.second_order.reference_trajectories as reference_trajectories
 except ModuleNotFoundError as e:
     print(
-        "Please download LMPC_walking from https://github.com/machines-in-motion/lmpc_walking."
+        "Please download lmpc_walking from https://github.com/machines-in-motion/lmpc_walking."
     )
     raise e
 
